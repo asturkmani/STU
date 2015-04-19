@@ -9,6 +9,8 @@ Output of SerialPort proportionally to amount of infrared reflected.*/
 
 
 int sensorPin = A0;    // select the input pin for the potentiometer
+//int referencePin = A1;
+//int referenceValue = 0;
 int sensorValue = 0;  // variable to store the value coming from the sensor
 int sumValue=0;      // variable to store the sum of all sensor values.
 int avgValue = 0;    // variable to store average value
@@ -39,35 +41,24 @@ ISR(TIMER1_COMPA_vect) {
   
   //read analog input
   sensorValue = analogRead(sensorPin);
+  Serial.println(sensorPin);
+//  referenceValue = analogRead(referencePin);
   
-    //sensorValue = analogRead(sensorPin) + sensorValue;
+//  sensorValue = map(sensorValue,0,1024,0,5000);
+//  Serial.println(sensorValue);
     sumValue = sumValue + sensorValue;
     
     
-    if(count == 200){
-      avgValue = sumValue/count;
-      //Serial.print(avgValue);
-      //Serial.println("");
-      count=1;
-      sumValue = 0;
-      Serial.print(avgValue);
-      Serial.println("");
-    
-//      if(avgValue > 104){
-//        Serial.print("Nothing");
-//        Serial.println("");}
-//      if (avgValue >101 && avgValue <104){
-//        Serial.print("Plastic");
-//        Serial.println("");}
-//       if (avgValue > 90 && avgValue < 94){
-//         Serial.print("Metal");
-//         Serial.println("");}
-//       if (avgValue > 95 && avgValue < 100){
-//         Serial.print("Paper");
-//         Serial.println("");}
-  
-    }
-   count=count+1;
+//    if(count == 200){
+//      avgValue = sumValue/count;
+//      //Serial.print(avgValue);
+//      //Serial.println("");
+//      count=0;
+//      sumValue = 0;
+//      Serial.println(avgValue);
+//      avgValue=0;
+//    }
+//   count=count+1;
   
 }
 
