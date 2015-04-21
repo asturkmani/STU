@@ -27,6 +27,7 @@ made that allow for code outside of the interrupt.
 int analogIn = 0;
 int PiezoPin = A0;
 int Dword=0;
+int countOfN = 0;
 unsigned int count = 0;
 volatile byte flag = 1;
 
@@ -38,7 +39,7 @@ void setup() {
   TCCR1B = 0;// same for TCCR1B
   TCNT1  = 0;//initialize counter value to 0
   // set compare match register for 100hz increments
-  OCR1A = 0.03;// = (16*10^6) / (10*10224) - 1 (must be <65536)
+  OCR1A = 100;// = (16*10^6) / (10*1024) - 1 (must be <65536)
   // turn on CTC mode
   TCCR1B |= (1 << WGM12);
   // Set CS10 and CS12 bits for 1024 prescaler
@@ -61,14 +62,22 @@ void loop() {
       fft_reorder(); // reorder for fft input
       fft_run(); // process fft
       fft_mag_log(); // take output of fft
-      for (byte i = 0 ; i < FFT_N/2 ; i++) { 
-      Serial.print(fft_log_out[i]); // send out the data
-      Serial.print(" "); 
-        }
-       Serial.print(";");
-       Serial.println();
+              countOfN =0;
+      for (byte i=0; i< FFT_N/2 ; i++) {
+        if ( fft_log_out[i] != 0){
+          countOfN = countOfN + 1;}
+      }
+      if (countOfN > 10){
+        for (byte i = 0 ; i < FFT_N/2 ; i++) { 
+        Serial.print(fft_log_out[i]); // send out the data
+        Serial.print(" "); 
+          }
+         Serial.print(";");
+         Serial.println();
+       }
       flag = 1; // tell the codec that processing is done
     }
+    
 }
 
 // timer1 interrupt routine - data collected here
