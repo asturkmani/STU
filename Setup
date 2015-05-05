@@ -1,0 +1,18 @@
+NOTE: Breadboard V+ V- lines not connected across all of breadboard. only until half of it. Connect two halves with two wires.
+
+Piezo setup:
+	1) Used inverting amplifier configuration with LM358P.
+	2) Red of piezo to ground, black to amplifier input.
+	3) amplifier Vcc +5V from arduino, GND on other terminal.
+	4) Used Ri = 100ohms Rf=10000ohms. Gain = 100.
+	5) Detects glass by counting spikes from Piezo. Typically >7 for glass and less 	for plastic.
+	
+Inductive setup:
+	1) Need 1kohm resistor
+	2) use LED for metal detection.
+
+IR setup:
+	Check IRSetup screenshot.
+	1) need 15kohm resistor and 180ohm resistor.
+	2) Use two similar setups to cancel out distance dependency. Take difference between two sensors (1 with blockade and one for reference.)
+	3) For differential opamp, use 100ohm R3/R1, and 120kohm R2/R4 for a total gain of  1200.
